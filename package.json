@@ -1,0 +1,18 @@
+{
+  "name": "react-native-hook-form",
+  "version": "1.0.0",
+  "description": "Wrapper of react-hook-form and set of components to  make it easier to use",
+  "main": "index.js",
+  "repository": "github.com/javierdac/react-native-hook-form",
+  "author": "Javier DAccorso",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@react-native-community/datetimepicker": "^3.0.2",
+    "moment": "^2.27.0",
+    "react-hook-form": "^6.7.2",
+    "react-native-modal-datetime-picker": "^8.9.3",
+    "react-native-paper": "^4.1.0",
+    "react-native-vector-icons": "^7.0.0"
+  }
+}
