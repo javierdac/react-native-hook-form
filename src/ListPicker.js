@@ -1,4 +1,4 @@
-import React, {Component, useState} from 'react';
+import React, { Component, useState } from "react";
 import {
   Button,
   Dimensions,
@@ -7,13 +7,13 @@ import {
   Text,
   View,
   TouchableOpacity,
-} from 'react-native';
-import Modal from 'react-native-modal';
-import {TextInput} from 'react-native-paper';
-import {Picker} from '@react-native-community/picker';
+} from "react-native";
+import Modal from "react-native-modal";
+import TextInput from "./TextInput";
+import { Picker } from "@react-native-community/picker";
 
 // Screen Dimensions
-const {height, width} = Dimensions.get('window');
+const { height, width } = Dimensions.get("window");
 
 export default class ListPicker extends Component {
   //
@@ -28,7 +28,7 @@ export default class ListPicker extends Component {
     this.state = {
       modalVisible: this.props.isVisible,
       tempItem: undefined,
-      item: this.props.name,
+      item: this.props.value,
     };
 
     this.androidPicker = React.createRef(); // make the ref
@@ -37,7 +37,7 @@ export default class ListPicker extends Component {
   // Toggle Modal
   toggleModal = () => {
     // Check Platform (iOS)
-    if (Platform.OS === 'ios') {
+    if (Platform.OS === "ios") {
       // React Hook: Toggle Modal
       //this.toggle((modalVisible: boolean) => !modalVisible);
       this.setState({
@@ -51,17 +51,17 @@ export default class ListPicker extends Component {
   };
 
   // Select Item
-  selectItem = (item) => {
+  selectItem = item => {
     try {
       // Check Platform (iOS)
-      if (Platform.OS === 'ios') {
+      if (Platform.OS === "ios") {
         // React Hook: Set Temp State
         this.setState({
           tempItem: item,
         });
       }
       // Check Platform (Android)
-      else if (Platform.OS === 'android') {
+      else if (Platform.OS === "android") {
         // React Hook: Set Item
         this.setState({
           item: item,
@@ -87,8 +87,9 @@ export default class ListPicker extends Component {
               ? this.state.tempItem
               : this.state.item
           }
-          onValueChange={(item) => this.selectItem(item)}>
-          {this.props.items.map((item) => {
+          onValueChange={item => this.selectItem(item)}
+        >
+          {this.props.items.map(item => {
             return (
               <Picker.Item
                 label={item.label}
@@ -144,10 +145,10 @@ export default class ListPicker extends Component {
   };
 
   showItemLabel = () => {
-    let result = '';
+    let result = "";
 
     let item = this.props.items.find(
-      (element) => element.value === this.state.item,
+      element => element.value === this.state.item,
     );
     if (item !== undefined) {
       result = item.label;
@@ -160,11 +161,12 @@ export default class ListPicker extends Component {
   renderPlatform = () => {
     try {
       // Check Platform (iOS)
-      if (Platform.OS === 'ios') {
+      if (Platform.OS === "ios") {
         return (
           <>
             <TouchableOpacity onPress={() => this.toggleModal()}>
               <TextInput
+                {...this.props}
                 label={this.props.label}
                 value={this.showItemLabel()}
                 style={this.props.style}
@@ -176,17 +178,28 @@ export default class ListPicker extends Component {
             <Modal
               isVisible={this.state.modalVisible}
               style={styles.modal}
-              backdropOpacity={0.3}>
+              backdropOpacity={0.3}
+            >
               <View style={styles.modalContainer}>
                 <View style={styles.pickerHeaderContainer}>
-                  <TouchableOpacity onPress={() => this.pressCancel()}>
+                  {/* <TouchableOpacity onPress={() => this.pressCancel()}>
                     <Text style={styles.cancelText}>Cancelar</Text>
-                  </TouchableOpacity>
-
+                  </TouchableOpacity> */}
+                  <View style={styles.cancelButton}>
+                    <Button
+                      onPress={() => this.pressCancel()}
+                      title={"Cancelar"}
+                    />
+                  </View>
                   <View style={styles.doneButton}>
+                    <Button
+                      onPress={() => this.pressDone()}
+                      title={"Aceptar"}
+                    />
+                    {/* 
                     <TouchableOpacity onPress={() => this.pressDone()}>
                       <Text style={styles.acceptText}>Aceptar</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                   </View>
                 </View>
 
@@ -200,7 +213,7 @@ export default class ListPicker extends Component {
       }
 
       // Check Platform (Android)
-      if (Platform.OS === 'android') {
+      if (Platform.OS === "android") {
         return (
           <View style={this.props.style}>
             <Text style={styles.placeholder}>{this.props.label}</Text>
@@ -210,8 +223,9 @@ export default class ListPicker extends Component {
               placeholder={this.props.label}
               selectedValue={this.state.item}
               onValueChange={this.selectItem}
-              mode="dialog">
-              {this.props.items.map((item) => {
+              mode="dialog"
+            >
+              {this.props.items.map(item => {
                 return (
                   <Picker.Item
                     label={item.label}
@@ -221,7 +235,7 @@ export default class ListPicker extends Component {
                 );
               })}
             </Picker>
-            <View style={{height: 1, backgroundColor: '#a0a0a0'}}></View>
+            <View style={{ height: 1, backgroundColor: "#a0a0a0" }}></View>
           </View>
         );
       }
@@ -245,54 +259,43 @@ const styles = StyleSheet.create({
     // color: colors.primary,
   },
   modalContainer: {
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'flex-end',
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   pickerHeaderContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     height: 45,
     width: width,
-    backgroundColor: '#FAFAF8',
-    borderColor: '#7D7D7D',
+    backgroundColor: "#FAFAF8",
+    borderColor: "#7D7D7D",
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   pickerContainer: {
     height: 250,
     width: width,
-    backgroundColor: 'white',
+    backgroundColor: "white",
   },
   doneButton: {
-    marginRight: 7,
+    marginRight: 5,
   },
-  doneText: {
-    fontFamily: 'System',
-    // color: colors.primary,
-    fontWeight: '600',
-    fontSize: 17,
-    marginRight: 16,
-  },
-  cancelText: {
-    fontFamily: 'System',
-    // color: colors.primary,
-    fontWeight: '400',
-    fontSize: 17,
-    marginLeft: 16,
+  cancelButton: {
+    marginLeft: 5,
   },
   acceptText: {
-    fontFamily: 'System',
+    fontFamily: "System",
     // color: colors.primary,
-    fontWeight: '400',
+    fontWeight: "400",
     fontSize: 17,
     marginRight: 10,
   },
   stateContainer: {
-    alignItems: 'center',
+    alignItems: "center",
     width: 75,
-    borderColor: '#7D7D7D',
+    borderColor: "#7D7D7D",
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   inputTitleContainer: {
@@ -300,32 +303,32 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   inputTitle: {
-    color: '#7D7D7D',
-    borderColor: '#7D7D7D',
+    color: "#7D7D7D",
+    borderColor: "#7D7D7D",
     fontSize: 10,
-    fontWeight: '600',
-    textTransform: 'uppercase',
+    fontWeight: "600",
+    textTransform: "uppercase",
   },
   fieldTextContainer: {
     height: 40,
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 12,
-    borderColor: '#7D7D7D',
+    borderColor: "#7D7D7D",
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   fieldText: {
     width: width - 32 - 20,
-    fontFamily: 'System',
+    fontFamily: "System",
     fontSize: 17,
-    fontWeight: '400',
-    color: '#000000',
-    alignSelf: 'center',
+    fontWeight: "400",
+    color: "#000000",
+    alignSelf: "center",
   },
   arrowForward: {
-    color: 'black',
+    color: "black",
     opacity: 0.3,
     marginRight: 7,
   },
@@ -335,6 +338,6 @@ const styles = StyleSheet.create({
   placeholder: {
     fontSize: 12,
     marginLeft: 11,
-    color: '#757575',
+    color: "#757575",
   },
 });

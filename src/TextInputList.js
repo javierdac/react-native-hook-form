@@ -1,14 +1,19 @@
-'use strict';
-import React from 'react';
-import ListPicker from './ListPicker';
-import {useFormContext} from 'react-hook-form';
+"use strict";
+import React, { useEffect } from "react";
+import ListPicker from "./ListPicker";
+import { useFormContext } from "react-hook-form";
 
-const TextInputList = (props) => {
+const TextInputList = props => {
   const context = useFormContext();
 
-  const onChange = (value) => {
+  useEffect(() => {
+    context.register(props.name, props.value);
+  }, []);
+
+  const onChange = value => {
     if (context?.control) {
-      context.setValue(props.name, moment(data).format(format));
+      context.setValue(props.name, value);
+      console.log(props.name, value);
     }
     props.onChange && props.onChange(value);
   };
@@ -18,7 +23,8 @@ const TextInputList = (props) => {
       label={props.label}
       items={props.list}
       name={props.name}
-      onChange={(value) => onChange(value)}
+      value={props.value}
+      onChange={value => onChange(value)}
       {...props}
     />
   );
