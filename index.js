@@ -1,6 +1,7 @@
-import Form from "./src/react-native-hook-form/Form";
-import FormButton from "./src/react-native-hook-form/FormButton";
-import TextInput from "./src/react-native-hook-form/TextInput";
-import TextInputDate from "./src/react-native-hook-form/TextInputDate";
+import Form from "./src/Form";
+import SubmitButton from "./src/FormButton";
+import TextInput from "./src/TextInput";
+import TextInputDate from "./src/TextInputDate";
+import TextInputList from "./src/TextInputList";
 
-export { Form, FormButton, TextInput, TextInputDate };
+export { Form, SubmitButton, TextInput, TextInputDate, TextInputList };
