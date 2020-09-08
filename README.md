@@ -2,10 +2,14 @@
 
 Wrapper of react-hook-form
 
-Dependencies
+## Dependencies
 
-react-native-paper
-react-native-modal
-react-native-modal-datetime-picker
-@react-native-community/picker
-@react-native-community/datetimepicker
+- react-native-paper
+- react-native-modal
+- react-native-modal-datetime-picker
+- @react-native-community/picker
+- @react-native-community/datetimepicker
+
+## License
+
+MIT © [javierdac](https://github.com/javierdac)
