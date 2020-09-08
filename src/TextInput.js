@@ -30,6 +30,7 @@ const TextInput = props => {
             renderItem({
               ...propsRender,
               ...props,
+              value: props.value || propsRender.value,
             })
           }
         />

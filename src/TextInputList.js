@@ -7,8 +7,8 @@ const TextInputList = props => {
   const context = useFormContext();
 
   useEffect(() => {
-    context.register(props.name, props.value);
-  }, []);
+    context?.register(props.name, props.value);
+  }, [context]);
 
   const onChange = value => {
     if (context?.control) {
