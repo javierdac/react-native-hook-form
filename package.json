@@ -1,6 +1,6 @@
 {
   "name": "react-native-hook-form",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Wrapper of react-hook-form and set of components to  make it easier to use",
   "main": "index.js",
   "repository": "github.com/javierdac/react-native-hook-form",
